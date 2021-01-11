@@ -6,6 +6,8 @@ config :geott, Geott.Repo,
   password: "postgres",
   database: "geott_dev",
   hostname: "localhost",
+  adapter: Ecto.Adapters.Postgres,
+  types: Geott.PostgresTypes,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -58,3 +60,7 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Joken
 config :joken, default_signer: "secret"
+
+# Postgis
+config :geo_postgis,
+  json_library: Jason

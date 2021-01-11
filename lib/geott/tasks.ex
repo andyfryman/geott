@@ -51,7 +51,7 @@ defmodule Geott.Tasks do
   """
   def create_task(attrs \\ %{}) do
     %Task{}
-    |> Task.changeset(attrs)
+    |> Task.changeset_create(attrs)
     |> Repo.insert()
   end
 

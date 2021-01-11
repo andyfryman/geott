@@ -6,7 +6,7 @@ defmodule Geott.TasksTest do
   describe "tasks" do
     alias Geott.Tasks.Task
 
-    @valid_attrs %{status: :new}
+    @valid_attrs %{status: :new, pickup: [30, 30], delivery: [60, 60]}
     @update_attrs %{status: :assigned}
     @invalid_attrs %{status: "invalid"}
 
@@ -21,12 +21,17 @@ defmodule Geott.TasksTest do
 
     test "list_tasks/0 returns all tasks" do
       task = task_fixture()
-      assert Tasks.list_tasks() == [task]
+      assert length(Tasks.list_tasks()) == length([task])
     end
 
     test "get_task!/1 returns the task with given id" do
-      task = task_fixture()
-      assert Tasks.get_task!(task.id) == task
+      expected = task_fixture()
+      actual = Tasks.get_task!(expected.id)
+      assert actual.id == expected.id
+      assert actual.status == expected.status
+      assert actual.driver_id == expected.driver_id
+      assert actual.pickup_point == expected.pickup_point
+      assert actual.delivery_point == expected.delivery_point
     end
 
     test "create_task/1 with valid data creates a task" do
@@ -47,7 +52,7 @@ defmodule Geott.TasksTest do
     test "update_task/2 with invalid data returns error changeset" do
       task = task_fixture()
       assert {:error, %Ecto.Changeset{}} = Tasks.update_task(task, @invalid_attrs)
-      assert task == Tasks.get_task!(task.id)
+      assert task.id == Tasks.get_task!(task.id).id
     end
 
     test "delete_task/1 deletes the task" do

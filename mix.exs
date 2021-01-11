@@ -45,6 +45,7 @@ defmodule Geott.MixProject do
       {:pow, "~> 1.0.21"},
       {:joken, "~> 2.2"},
       {:ecto_enum, "~> 1.4"},
+      {:geo_postgis, "~> 3.1"},
     ]
   end
 
