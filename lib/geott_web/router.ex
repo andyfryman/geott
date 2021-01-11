@@ -28,5 +28,7 @@ defmodule GeottWeb.Router do
 
   scope "/api", GeottWeb do
     pipe_through :api
+
+    resources "/tasks", TaskController, except: [:new, :edit]
   end
 end
