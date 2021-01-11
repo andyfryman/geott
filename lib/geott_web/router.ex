@@ -12,6 +12,14 @@ defmodule GeottWeb.Router do
       error_handler: Pow.Phoenix.PlugErrorHandler
   end
 
+  pipeline :manager do
+    plug GeottWeb.EnsureRolePlug, :manager
+  end
+
+  pipeline :driver do
+    plug GeottWeb.EnsureRolePlug, :driver
+  end
+
   scope "/api/auth", GeottWeb.Controllers do
     pipe_through :api
 

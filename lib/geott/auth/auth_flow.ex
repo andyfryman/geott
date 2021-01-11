@@ -14,6 +14,7 @@ defmodule Geott.Auth.AuthFlow do
         conn
         |> Conn.put_private(:api_access_token, jwt_token)
         |> Conn.put_private(:user_id, claims["user_id"])
+        |> Conn.put_private(:user_role, claims["user_role"])
 
       {conn, %{"token" => jwt_token}}
     else
@@ -23,7 +24,7 @@ defmodule Geott.Auth.AuthFlow do
 
   @impl true
   def create(conn, user, _config) do
-    claims = %{"user_id" => user.id}
+    claims = %{"user_id" => user.id, "user_role" => user.role}
     generated_token = Token.generate_and_sign!(claims)
     conn = conn |> Conn.put_private(:api_access_token, generated_token)
     {conn, user}
