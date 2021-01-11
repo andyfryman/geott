@@ -44,6 +44,7 @@ defmodule Geott.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0.21"},
       {:joken, "~> 2.2"},
+      {:ecto_enum, "~> 1.4"},
     ]
   end
 
