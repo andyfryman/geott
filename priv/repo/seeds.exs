@@ -9,3 +9,21 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+# drivers
+Enum.each(1..10, fn(x) ->
+  {:ok, _} = Geott.Users.create_driver(%{
+    email: "driver#{x}@com.com",
+    password: "12345678",
+    password_confirmation: "12345678",
+  })
+end)
+
+# managers
+Enum.each(1..10, fn(x) ->
+  {:ok, _} = Geott.Users.create_manager(%{
+    email: "manager#{x}@com.com",
+    password: "12345678",
+    password_confirmation: "12345678",
+  })
+end)
