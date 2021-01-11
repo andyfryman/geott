@@ -14,7 +14,7 @@ defmodule GeottWeb.TaskView do
     %{id: task.id,
       status: task.status,
       driver_id: task.driver_id,
-      pickup: Tuple.to_list(task.pickup_point.coordinates),
-      delivery: Tuple.to_list(task.delivery_point.coordinates)}
+      pickup: Enum.reverse(Tuple.to_list(task.pickup_point.coordinates)),
+      delivery: Enum.reverse(Tuple.to_list(task.delivery_point.coordinates))}
   end
 end

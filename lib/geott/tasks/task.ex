@@ -54,9 +54,9 @@ defmodule Geott.Tasks.Task do
   defp put_pickup_point(cs) do
     case cs do
       %{valid?: true} ->
-        loc = get_field(cs, :pickup)
+        [lat, lng] = get_field(cs, :pickup)
         cs
-        |> put_change(:pickup_point, %Geo.Point{coordinates: {Enum.at(loc, 0), Enum.at(loc, 1)}, srid: 4326})
+        |> put_change(:pickup_point, %Geo.Point{coordinates: {lng, lat}, srid: 4326})
       _ ->
         cs
     end
@@ -65,9 +65,9 @@ defmodule Geott.Tasks.Task do
   defp put_delivery_point(cs) do
     case cs do
       %{valid?: true} ->
-        loc = get_field(cs, :delivery)
+        [lat, lng] = get_field(cs, :delivery)
         cs
-        |> put_change(:delivery_point, %Geo.Point{coordinates: {Enum.at(loc, 0), Enum.at(loc, 1)}, srid: 4326})
+        |> put_change(:delivery_point, %Geo.Point{coordinates: {lng, lat}, srid: 4326})
       _ ->
         cs
     end

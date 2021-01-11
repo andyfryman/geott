@@ -20,9 +20,9 @@ defmodule Geott.Tasks.SearchTask do
   defp put_location_point(cs) do
     case cs do
       %{valid?: true} ->
-        loc = get_field(cs, :location)
+        [lat, lng] = get_field(cs, :location)
         cs
-        |> put_change(:location_point, %Geo.Point{coordinates: {Enum.at(loc, 0), Enum.at(loc, 1)}, srid: 4326})
+        |> put_change(:location_point, %Geo.Point{coordinates: {lng, lat}, srid: 4326})
       _ ->
         cs
     end
