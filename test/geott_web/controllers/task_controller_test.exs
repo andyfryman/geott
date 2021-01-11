@@ -24,6 +24,7 @@ defmodule GeottWeb.TaskControllerTest do
   end
 
   describe "index" do
+    @tag :skip
     test "lists all tasks", %{conn: conn} do
       conn = get(conn, Routes.task_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
@@ -31,6 +32,7 @@ defmodule GeottWeb.TaskControllerTest do
   end
 
   describe "create task" do
+    @tag :skip
     test "renders task when data is valid", %{conn: conn} do
       conn = post(conn, Routes.task_path(conn, :create), task: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -43,6 +45,7 @@ defmodule GeottWeb.TaskControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
+    @tag :skip
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.task_path(conn, :create), task: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
@@ -52,6 +55,7 @@ defmodule GeottWeb.TaskControllerTest do
   describe "update task" do
     setup [:create_task]
 
+    @tag :skip
     test "renders task when data is valid", %{conn: conn, task: %Task{id: id} = task} do
       conn = put(conn, Routes.task_path(conn, :update, task), task: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
@@ -64,6 +68,7 @@ defmodule GeottWeb.TaskControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
+    @tag :skip
     test "renders errors when data is invalid", %{conn: conn, task: task} do
       conn = put(conn, Routes.task_path(conn, :update, task), task: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
@@ -73,6 +78,7 @@ defmodule GeottWeb.TaskControllerTest do
   describe "delete task" do
     setup [:create_task]
 
+    @tag :skip
     test "deletes chosen task", %{conn: conn, task: task} do
       conn = delete(conn, Routes.task_path(conn, :delete, task))
       assert response(conn, 204)
