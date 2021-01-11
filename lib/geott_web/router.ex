@@ -30,5 +30,6 @@ defmodule GeottWeb.Router do
     pipe_through :api
 
     resources "/tasks", TaskController, except: [:new, :edit]
+    post "/tasks/search", TaskController, :search
   end
 end

@@ -1,6 +1,7 @@
 defmodule Geott.Tasks.Task do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
   alias Geott.Users.User
   alias Geo.PostGIS.Geometry
 
@@ -32,6 +33,22 @@ defmodule Geott.Tasks.Task do
     |> validate_length(:delivery, is: 2)
     |> put_pickup_point()
     |> put_delivery_point()
+  end
+
+  def order_by_nearest(query, point) do
+    {lng, lat} = point.coordinates
+
+    from(r in query,
+      order_by:
+        fragment("? <-> ST_SetSRID(ST_MakePoint(?,?), ?)", r.pickup_point, ^lng, ^lat, 4326)
+    )
+  end
+
+  def filter_available(query) do
+    from(r in query,
+      where:
+        r.status < :assigned
+    )
   end
 
   defp put_pickup_point(cs) do

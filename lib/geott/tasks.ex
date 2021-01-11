@@ -7,6 +7,7 @@ defmodule Geott.Tasks do
   alias Geott.Repo
 
   alias Geott.Tasks.Task
+  alias Geott.Tasks.SearchTask
 
   @doc """
   Returns the list of tasks.
@@ -19,6 +20,21 @@ defmodule Geott.Tasks do
   """
   def list_tasks do
     Repo.all(Task)
+  end
+
+  def search_tasks(attrs \\ %{}) do
+    %SearchTask{}
+    |> SearchTask.changeset(attrs)
+    |> case do
+      %{valid?: true} = cs ->
+        tasks = from(t in Task)
+        |> Task.filter_available()
+        |> Task.order_by_nearest(cs.changes.location_point)
+        |> Repo.all()
+        {:ok, tasks}
+      %{errors: _errors} = _cs ->
+        {:error}
+    end
   end
 
   @doc """

@@ -40,4 +40,10 @@ defmodule GeottWeb.TaskController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def search(conn, %{"params" => params}) do
+    with {:ok, tasks} <- Tasks.search_tasks(params) do
+      render(conn, "index.json", tasks: tasks)
+    end
+  end
 end
