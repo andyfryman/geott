@@ -13,7 +13,6 @@ defmodule GeottWeb.TaskView do
   def render("task.json", %{task: task}) do
     %{id: task.id,
       status: task.status,
-      driver_id: task.driver_id,
       pickup: Enum.reverse(Tuple.to_list(task.pickup_point.coordinates)),
       delivery: Enum.reverse(Tuple.to_list(task.delivery_point.coordinates))}
   end

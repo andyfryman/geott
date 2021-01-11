@@ -32,7 +32,9 @@ defmodule GeottWeb.EnsureRolePlug do
   defp has_role?(user, roles) when is_list(roles), do: Enum.any?(roles, &has_role?(user, &1))
   defp has_role?(user, role) when is_atom(role), do: has_role?(user, Atom.to_string(role))
   defp has_role?(%{role: role}, role), do: true
-  defp has_role?(_user, _role), do: false
+  defp has_role?(user, role) do
+    Map.get(user, "role") == role
+  end
 
   defp maybe_halt(true, conn), do: conn
   defp maybe_halt(_any, conn) do

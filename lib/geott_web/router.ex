@@ -8,8 +8,7 @@ defmodule GeottWeb.Router do
   end
 
   pipeline :api_protected do
-    plug Pow.Plug.RequireAuthenticated,
-      error_handler: Pow.Phoenix.PlugErrorHandler
+    plug Pow.Plug.RequireAuthenticated, error_handler: GeottWeb.ApiAuthErrorHandler
   end
 
   pipeline :manager do
@@ -27,9 +26,21 @@ defmodule GeottWeb.Router do
   end
 
   scope "/api", GeottWeb do
-    pipe_through :api
+    pipe_through [:api, :api_protected]
 
-    resources "/tasks", TaskController, except: [:new, :edit]
+    get "/tasks/:id", TaskController, :show
+  end
+
+  scope "/api", GeottWeb do
+    pipe_through [:api, :api_protected, :driver]
+
     post "/tasks/search", TaskController, :search
+    put "/tasks/:id", TaskController, :update
+  end
+
+  scope "/api", GeottWeb do
+    pipe_through [:api, :api_protected, :manager]
+
+    post "/tasks", TaskController, :create
   end
 end

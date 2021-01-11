@@ -16,7 +16,7 @@ defmodule Geott.Auth.AuthFlow do
         |> Conn.put_private(:user_id, claims["user_id"])
         |> Conn.put_private(:user_role, claims["user_role"])
 
-      {conn, %{"token" => jwt_token}}
+      {conn, %{"token" => jwt_token, "role" => claims["user_role"]}}
     else
       _any -> {conn, nil}
     end
