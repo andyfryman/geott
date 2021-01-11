@@ -27,3 +27,11 @@ Enum.each(1..10, fn(x) ->
     password_confirmation: "12345678",
   })
 end)
+
+# tasks
+Enum.each(1..10, fn(_) ->
+  {:ok, _} = Geott.Tasks.create_task(%{
+    pickup: [Enum.random(-90..90), Enum.random(-90..90)],
+    delivery: [Enum.random(-90..90), Enum.random(-90..90)],
+  })
+end)
